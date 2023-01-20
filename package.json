@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "seed": "DB_FILE=db.sqlite node database/seed.js"
+  },
   "eslintConfig": {
     "extends": [
       "wesbos"
