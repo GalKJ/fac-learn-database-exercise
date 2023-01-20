@@ -1,0 +1,11 @@
+{
+  "eslintConfig": {
+    "extends": [
+      "wesbos"
+    ]
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.0.1",
+    "eslint-config-wesbos": "^3.2.3"
+  }
+}
