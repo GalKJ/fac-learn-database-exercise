@@ -1,13 +1,13 @@
 const db = require('../database/db');
 
-const insert_task = db.prepare(`
-    INSERT INTO tasks (content) 
-    VALUES (?)
+const insert_task = db.prepare(/* sql */ `
+    INSERT INTO tasks (content, complete) 
+    VALUES ($content, $complete)
     RETURNING id, content, created_at
 `);
 
-function createTask(content) {
-    return insert_task.get(content);
+function createTask(task) {
+    return insert_task.get(task);
 }
 
 createTask('This is a test task!');
