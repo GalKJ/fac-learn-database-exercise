@@ -53,6 +53,19 @@ function editTask(task) {
 
 // editTask({ id: 1, content: 'This is an updated task!' });
 
-console.log('ln43', listTasks());
+// console.log('ln43', listTasks());
 
-module.exports = { createTask, removeTask, listTasks, editTask };
+const update_complete = db.prepare(/* sql */ `
+UPDATE tasks
+SET complete = NOT complete
+WHERE id = ?
+RETURNING id, content, created_at, complete
+`);
+
+function toggleTask(id) {
+    return update_complete.get(id);
+}
+
+toggleTask(4);
+
+module.exports = { createTask, removeTask, listTasks, editTask, toggleTask };
