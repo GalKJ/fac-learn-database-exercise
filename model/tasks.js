@@ -10,11 +10,21 @@ function createTask(task) {
     return insert_task.get(task);
 }
 
-createTask('This is a test task!');
+createTask({ content: 'This is a test task!', complete: 0 });
 const tasks = db.prepare('SELECT * FROM tasks').all();
 console.log(tasks);
 
-const result = createTask('Buy ergo mouse');
+const result = createTask({ content: 'Buy ergo mouse', complete: 0 });
 console.log(result);
+
+const select_tasks = db.prepare(/* sql */ `
+    SELECT id, content, created_at, complete FROM tasks
+`);
+
+function listTasks() {
+    return select_tasks.all();
+}
+
+console.log('ln28', listTasks());
 
 module.exports = { createTask };
