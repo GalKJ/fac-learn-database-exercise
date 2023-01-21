@@ -5,12 +5,14 @@ const model = require('./model/tasks.js');
 const server = express();
 
 server.get('/', (req, res) => {
+    const tasks = model.listTasks();
     const body = /* html */ `
     <!DOCTYPE html>
     <form method="POST">
     <input id="content" name="content" aria-label="New task" required>
     <button>Add Task +</button>
     </form>
+    <ul>${tasks.map((t) => `<li>${t.content}</li>`).join('')}</ul>
     `;
 
     res.send(body);
