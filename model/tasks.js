@@ -12,10 +12,10 @@ function createTask(task) {
 
 createTask({ content: 'This is a test task!', complete: 0 });
 const tasks = db.prepare('SELECT * FROM tasks').all();
-console.log(tasks);
+// console.log(tasks);
 
 const result = createTask({ content: 'Buy ergo mouse', complete: 0 });
-console.log(result);
+// console.log(result);
 
 const select_tasks = db.prepare(/* sql */ `
     SELECT
@@ -30,8 +30,6 @@ function listTasks() {
     return select_tasks.all();
 }
 
-console.log('ln28', listTasks());
-
 const delete_task = db.prepare(/* sql */ `
   DELETE FROM tasks WHERE id = ?
 `);
@@ -40,6 +38,21 @@ function removeTask(id) {
     delete_task.run(id);
 }
 
-removeTask(1);
+// removeTask(1);
 
-module.exports = { createTask };
+const update_content = db.prepare(/* sql */ `
+UPDATE tasks
+SET content = $content
+WHERE id = $id
+RETURNING id, content, created_at, complete
+`);
+
+function editTask(task) {
+    return update_content.get(task);
+}
+
+// editTask({ id: 1, content: 'This is an updated task!' });
+
+console.log('ln43', listTasks());
+
+module.exports = { createTask, removeTask, listTasks, editTask };
