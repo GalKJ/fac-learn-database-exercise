@@ -18,7 +18,12 @@ const result = createTask({ content: 'Buy ergo mouse', complete: 0 });
 console.log(result);
 
 const select_tasks = db.prepare(/* sql */ `
-    SELECT id, content, created_at, complete FROM tasks
+    SELECT
+    id,
+    content,
+    TIME(created_at) AS created_at,
+    complete
+    FROM tasks
 `);
 
 function listTasks() {
